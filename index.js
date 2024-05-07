@@ -50,7 +50,7 @@ d.addEventListener("click",(e)=>{
 
         enviar(paquete)
         .then(res=>{
-            $contenedor.innerHTML=res;
+            $contenedor.innerHTML=JSON.stringify(res);
         })
         .catch(error=>{
             $contenedor.innerHTML=error
