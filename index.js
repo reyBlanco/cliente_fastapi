@@ -38,7 +38,7 @@ d.addEventListener("click",(e)=>{
 
         //let {url,data,method,mode,headers,msgError}=paquete;
         let paquete={
-            url:"",
+            url:"http://192.168.100.16:3000/enviar",
             method:"POST",
             mode:"cors",
             data:caballero,
@@ -50,7 +50,7 @@ d.addEventListener("click",(e)=>{
 
         enviar(paquete)
         .then(res=>{
-            $contenedor.innerHTML=res;
+            $contenedor.innerHTML=JSON.stringify(res);
         })
         .catch(error=>{
             $contenedor.innerHTML=error

@@ -1,6 +1,7 @@
 from pydantic import BaseModel
+from typing import Optional
 
 class Caballero_del_zodiaco(BaseModel):
-    nombre:str
-    constelacion:str
-    dios:str
+    nombre:Optional[str]
+    constelacion:Optional[str]
+    dios:Optional[str]
