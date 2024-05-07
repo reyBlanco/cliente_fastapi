@@ -38,7 +38,7 @@ d.addEventListener("click",(e)=>{
 
         //let {url,data,method,mode,headers,msgError}=paquete;
         let paquete={
-            url:"http://192.168.100.16:3000/enviar",
+            url:"https://render-fbxh.onrender.com/enviar",
             method:"POST",
             mode:"cors",
             data:caballero,
