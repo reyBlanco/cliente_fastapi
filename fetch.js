@@ -45,7 +45,7 @@ d.addEventListener("click",(e)=>{
 
         //let {url,data,method,mode,headers,msgError}=paquete;
         let paquete={
-            url:"https://render-fbxh.onrender.com/enviar",
+            url:url2,
             method:"POST",
             mode:"cors",
             data:caballero,
@@ -79,3 +79,20 @@ d.addEventListener("click",(e)=>{
     }
 });
 
+ws.addEventListener("open",(e)=>{
+    $contenedor.innerHTML="conectado con el websocket";
+    
+});
+
+ws.addEventListener("error",(e)=>{
+    $contenedor.innerHTML="erro al conectar con el websocket";
+});
+
+ws.addEventListener("close",(e)=>{
+    $contenedor.innerHTML="se cerro la conexion con el servidor";
+});
+
+ws.addEventListener("message",(msg)=>{
+    mensaje=msg.data;
+    $contenedor.innerHTML=mensaje;
+});

@@ -29,7 +29,7 @@ async def home():
     return {"mensaje":"hola les saluda Jesus desde el servidor fastapi"}
 
 @app.post("/enviar")
-async def enviar(caballero:Optional[Caballero_del_zodiaco]):
+async def enviar(caballero:Caballero_del_zodiaco):
     diccionario_caballero=dict(caballero)
     print(diccionario_caballero)
     sys.stdout.flush()
