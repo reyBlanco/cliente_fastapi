@@ -5,7 +5,7 @@ h1{
     text-shadow: 5px 5px 1px rgb(22, 88, 174),
                  0 0 1em blue,
                  0 0 0.2em rgb(34, 34, 40);
-    color:rgb(23, 2, 20);
+    color:rgb(133, 219, 14);
     font-size: 60px;
 }
 
@@ -36,4 +36,18 @@ h1{
     font-size: 50px;
     background-color: sandybrown;
     color:rgba(224, 9, 88, 0.944);
+}
+
+h2{
+    color: aliceblue;
+}
+
+#p1{
+    font-weight: 900;
+    color: blanchedalmond;
+}
+
+#submit_websocket{
+    background-color: blue;
+    font-size: 50px;
 }
