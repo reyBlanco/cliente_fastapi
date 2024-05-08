@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status
-import sys
 from pydantic import BaseModel
-from typing import Optional
+from ManagerWebSocket import *
 
 
 class Caballero_del_zodiaco(BaseModel):
@@ -14,6 +13,8 @@ class Caballero_del_zodiaco(BaseModel):
 
 
 app=FastAPI()
+m_ws=ManagerWebSocket()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -33,3 +34,8 @@ async def enviar(caballero:Optional[Caballero_del_zodiaco]):
     print(diccionario_caballero)
     sys.stdout.flush()
     return {"mensaje":"paquete recivido"}
+
+@app.websocket("/ws")
+async def wSocket(ws:WebSocket):
+    await m_ws.conectar(ws)
+    await m_ws.escuchador_retransmision(ws)

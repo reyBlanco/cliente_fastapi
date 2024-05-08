@@ -4,8 +4,15 @@ const $form_caballero=d.querySelector("#form_caballero"),
       $text_constelacion=$form_caballero.querySelector("#text_constelacion"),
       $text_dios=$form_caballero.querySelector("#text_dios");
 
-const $submit_enviar=$form_caballero.querySelector("#submit_enviar")
+const $submit_enviar=$form_caballero.querySelector("#submit_enviar");
+const $submit_websocket=d.querySelector("#submit_websocket");
 const $contenedor=d.querySelector("#contenedor");
+
+let url1="https://render-fbxh.onrender.com/enviar";
+let url2="http://192.168.100.16:3000/enviar"
+let url_ws="ws://192.168.100.16:3000/ws"
+
+const ws=new WebSocket(url_ws)
 
 const enviar=async (paquete)=>{
     let {url,data,method,mode,headers,msgError}=paquete;
@@ -56,6 +63,19 @@ d.addEventListener("click",(e)=>{
             $contenedor.innerHTML=error
         })
         
+    }
+    if (e.target===$submit_websocket){
+        let nombre=$text_caballero.value;
+        let constelacion=$text_constelacion.value;
+        let dios=$text_dios.value
+        
+        let caballero={
+            nombre,
+            constelacion,
+            dios
+        }
+
+        ws.send(JSON.stringify(caballero))
     }
 });
 

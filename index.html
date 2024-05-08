@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Guardar caballero del zodiaco</h1>
+    <hr>
+    <h2>Enviar datos usando fetch</h2>
+    <form action="" id="form_caballero">
+        <label for="">Nombre del Caballero:</label><input type="text" name="caballero" id="text_caballero"><br>
+        <label for="">Constelacion:</label><input type="text" name="constelacion" id="text_constelacion"><br>
+        <label for="">dios al que sirve:</label><input type="text" name="dios" id="text_dios"><br>
+        <input type="submit" value="enviar" id="submit_enviar">
+    </form>
+    <hr>
+    
+    <h2>Enviar datos con websocket</h2>
+    <p id="p1">usando los datos del formulario de arriba,solo da click en el boton websocket</p><br>
+    <input type="submit" id="submit_websocket" value="websocket" >
+
+    <div id="contenedor"></div>
+    <script src="./fetch.js"></script>
+</body>
+</html>
