@@ -11,7 +11,7 @@ const $contenedor=d.querySelector("#contenedor");
 let url1="https://render-fbxh.onrender.com/enviar";
 let url2="http://192.168.100.16:3000/enviar"
 
-let url_ws1="wss://render-fbxh.onrender.com/ws"
+let url_ws1="ws://render-fbxh.onrender.com/ws"
 let url_ws2="ws://192.168.100.16:3000/ws"
 
 const ws=new WebSocket(url_ws1)
