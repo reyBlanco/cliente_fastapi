@@ -6,9 +6,9 @@ from ManagerWebSocket import *
 
 
 class Caballero_del_zodiaco(BaseModel):
-    nombre:Optional[str]
-    constelacion:Optional[str]
-    dios:Optional[str]
+    nombre:str
+    constelacion:str
+    dios:str
 
 
 
