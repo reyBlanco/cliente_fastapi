@@ -8,9 +8,18 @@ const $submit_enviar=$form_caballero.querySelector("#submit_enviar");
 const $submit_websocket=d.querySelector("#submit_websocket");
 const $contenedor=d.querySelector("#contenedor");
 
+const $form_token=d.querySelector("#form_token"),
+      $text_password=$form_token.querySelector("#text_password"),
+      $submit_token=$form_token.querySelector("#submit_token"),
+      $contenedor_token=d.querySelector("#contenedor_token");
+
+const form=new FormData()
+
 let url1="https://render-fbxh.onrender.com/enviar";
 let url2="http://192.168.100.16:3000/enviar"
 let url_ws="ws://192.168.100.16:3000/ws"
+
+let url_login="http://192.168.100.16:8000/login"
 
 const ws=new WebSocket(url_ws)
 
@@ -30,6 +39,21 @@ const enviar=async (paquete)=>{
     }
 }
 
+const enviar_password=async (paquete)=>{
+    let {url,data,method,mode,headers,msgError}=paquete;
+    let res=await fetch(url,{
+        body:data,
+        headers,
+        method,
+        mode
+    });
+
+    if(res.ok){
+        return await res.json()
+    }else{
+        throw(msgError)
+    }
+}
 d.addEventListener("click",(e)=>{
     e.preventDefault()
     if(e.target===$submit_enviar){
@@ -77,6 +101,25 @@ d.addEventListener("click",(e)=>{
         }
 
         ws.send(JSON.stringify(caballero))
+    }
+    if(e.target===$submit_token){
+        form.append("password",$text_password.value)
+        //let {url,data,method,mode,headers,msgError}=paquete;
+        let paquete={
+            url:url_login,
+            data:form,
+            method:"POST",
+            mode:"cors",
+            headers:{},
+            msgError:"error al enviar password"
+        }
+
+        enviar_password(paquete)
+        .then(res=>{
+            $contenedor_token.innerHTML=JSON.stringify(res)
+        })
+        .catch(error=>$contenedor_token.innerHTML=error)
+
     }
 });
 

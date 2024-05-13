@@ -1,8 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Depends,HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status
 from pydantic import BaseModel
 from ManagerWebSocket import *
+from jose import jwt
+from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
+from passlib.context import CryptContext
+
 
 
 class Caballero_del_zodiaco(BaseModel):
@@ -15,6 +19,12 @@ class Caballero_del_zodiaco(BaseModel):
 app=FastAPI()
 m_ws=ManagerWebSocket()
 
+oauth2=OAuth2PasswordBearer(tokenUrl="/login")
+crypt=CryptContext(schemes=["bcrypt"])
+
+key="$2a$12$SgxrocXlGY/z995n3619cugqKcqqA1gpCbKLJ0klPTL7l5fnZ8Gris"
+j_wt=""
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -23,6 +33,18 @@ app.add_middleware(
     allow_credentials=True,
 
 )
+
+@app.post("/login")
+async def login(form:OAuth2PasswordRequestForm = Depends()):
+    password=form.password
+    global j_wt
+    j_wt="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc190b2tlbiI6Inl1cmVjdWFybyJ9.5NtVFIP9DzPoFnneeTmMVJq8KLIPXYdQsOSfRK_oyUk"
+    
+    if not crypt.verify(password,key):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="contraseña incorrecta")
+    return j_wt
+
+
 
 @app.get("/")
 async def home():
@@ -38,4 +60,12 @@ async def enviar(caballero:Caballero_del_zodiaco):
 @app.websocket("/ws")
 async def wSocket(ws:WebSocket):
     await m_ws.conectar(ws)
-    await m_ws.escuchador_retransmision(ws)
+    datos_json:dict=await ws.receive_json()
+    
+    if j_wt==datos_json.get("constelacion"):
+
+        await m_ws.escuchador_retransmision(ws)
+    else:
+        await ws.send_json({"mensaje":"acceso denegado"})
+        await ws.close()
+        m_ws.removerClienteDesconectado(ws)
