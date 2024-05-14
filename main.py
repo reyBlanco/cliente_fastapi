@@ -65,8 +65,10 @@ async def wSocket(ws:WebSocket):
     
     if pass_acces==datos_json.get("constelacion"):
 
+
         await m_ws.escuchador_retransmision(ws)
     else:
         await ws.send_json({"mensaje":"acceso denegado"})
         await ws.close()
         await m_ws.removerClienteDesconectado(ws)
+
