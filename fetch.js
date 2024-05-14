@@ -12,16 +12,15 @@ const $form_token=d.querySelector("#form_token"),
       $text_password=$form_token.querySelector("#text_password"),
       $submit_token=$form_token.querySelector("#submit_token"),
       $contenedor_token=d.querySelector("#contenedor_token");
-
-const form=new FormData()
+      
 
 let url1="https://render-fbxh.onrender.com/enviar";
 let url2="http://192.168.100.16:3000/enviar"
 let url_ws="ws://192.168.100.16:3000/ws"
-
-let url_login="http://192.168.100.16:8000/login"
+let url_login="http://192.168.100.16:3000/login"
 
 const ws=new WebSocket(url_ws)
+let form=new FormData()
 
 const enviar=async (paquete)=>{
     let {url,data,method,mode,headers,msgError}=paquete;
@@ -54,6 +53,7 @@ const enviar_password=async (paquete)=>{
         throw(msgError)
     }
 }
+
 d.addEventListener("click",(e)=>{
     e.preventDefault()
     if(e.target===$submit_enviar){
@@ -69,8 +69,7 @@ d.addEventListener("click",(e)=>{
 
         //let {url,data,method,mode,headers,msgError}=paquete;
         let paquete={
-
-            url:url1,
+            url:url2,
             method:"POST",
             mode:"cors",
             data:caballero,
@@ -103,24 +102,26 @@ d.addEventListener("click",(e)=>{
         ws.send(JSON.stringify(caballero))
     }
     if(e.target===$submit_token){
-        form.append("password",$text_password.value)
         //let {url,data,method,mode,headers,msgError}=paquete;
+        form.append("password",$text_password.value);
+        form.append("username","jesus")
         let paquete={
-            url:url_login,
+            url:"http://192.168.100.16:3000/login",
             data:form,
             method:"POST",
             mode:"cors",
             headers:{},
-            msgError:"error al enviar password"
+            msgError:"error al mandar password"
         }
 
         enviar_password(paquete)
         .then(res=>{
             $contenedor_token.innerHTML=JSON.stringify(res)
         })
-        .catch(error=>$contenedor_token.innerHTML=error)
+        .catch(err=>console.log(err))
 
     }
+    
 });
 
 ws.addEventListener("open",(e)=>{
