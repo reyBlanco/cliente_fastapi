@@ -1,5 +1,6 @@
 body{
     background-color: darkslategrey;
+    font-size: 50px;
 }
 h1{
     text-shadow: 5px 5px 1px rgb(22, 88, 174),
@@ -51,3 +52,15 @@ h2{
     background-color: blue;
     font-size: 50px;
 }
+
+#text_password{
+    font-size: 50px;
+}
+
+#submit_token{
+    font-size: 50px;
+}
+
+/* #contenedor_token{
+    font-size: 50px;
+} */
