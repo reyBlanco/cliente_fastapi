@@ -69,7 +69,7 @@ d.addEventListener("click",(e)=>{
 
         //let {url,data,method,mode,headers,msgError}=paquete;
         let paquete={
-            url:url2,
+            url:url1,
             method:"POST",
             mode:"cors",
             data:caballero,
