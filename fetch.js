@@ -14,12 +14,14 @@ const $form_token=d.querySelector("#form_token"),
       $contenedor_token=d.querySelector("#contenedor_token");
       
 
-let url1="https://render-fbxh.onrender.com/enviar";
-let url2="http://192.168.100.16:3000/enviar"
+let url1_renderhttps="https://render-fbxh.onrender.com/enviar";
+let url2_local="http://192.168.100.16:3000/enviar"
 let url_ws="ws://192.168.100.16:3000/ws"
+let url_ws_render="wss://render-fbxh.onrender.com/ws"
 let url_login="http://192.168.100.16:3000/login"
+let url_login_render="https://render-fbxh.onrender.com/login"
 
-const ws=new WebSocket(url_ws)
+const ws=new WebSocket(url_ws_render)
 let form=new FormData()
 
 const enviar=async (paquete)=>{
@@ -69,7 +71,7 @@ d.addEventListener("click",(e)=>{
 
         //let {url,data,method,mode,headers,msgError}=paquete;
         let paquete={
-            url:url1,
+            url:url1_renderhttps,
             method:"POST",
             mode:"cors",
             data:caballero,
@@ -106,7 +108,7 @@ d.addEventListener("click",(e)=>{
         form.append("password",$text_password.value);
         form.append("username","jesus")
         let paquete={
-            url:"http://192.168.100.16:3000/login",
+            url:url_login_render,
             data:form,
             method:"POST",
             mode:"cors",
