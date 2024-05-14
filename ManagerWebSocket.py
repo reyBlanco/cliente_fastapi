@@ -10,8 +10,8 @@ class ManagerWebSocket:
         await wsCliente.accept()
         self.listaConectados.append(wsCliente)
     
-    async def removerClienteDesconectado(self,wsCliente:Optional[WebSocket]):
-        await self.listaConectados.remove(wsCliente)
+    def removerClienteDesconectado(self,wsCliente:Optional[WebSocket]):
+        self.listaConectados.remove(wsCliente)
     
     async def broadCast(self,datos:Optional[dict]):
         for ws in self.listaConectados:

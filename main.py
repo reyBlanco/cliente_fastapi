@@ -22,8 +22,8 @@ m_ws=ManagerWebSocket()
 oauth2=OAuth2PasswordBearer(tokenUrl="/login")
 crypt=CryptContext(schemes=["bcrypt"])
 
-key="$2a$12$HoLJeoXZNJXZo3defenEDuyv7vquFdm/SZ6waakoQSjHEm3WoH1Jy"
-j_wt=""
+contaseña="$2a$12$11nk4jG2pkGMzOqx9EzQdO57CX2623hKZgLemoMOYw7UQ1PCwDyme"
+pass_acces="michoacan"
 
 app.add_middleware(
     CORSMiddleware,
@@ -37,12 +37,13 @@ app.add_middleware(
 @app.post("/login")
 async def login(form:OAuth2PasswordRequestForm = Depends()):
     password=form.password
-    global j_wt
-    j_wt="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc190b2tlbiI6Inl1cmVjdWFybyJ9.5NtVFIP9DzPoFnneeTmMVJq8KLIPXYdQsOSfRK_oyUk"
+
+    if not crypt.verify(password,contaseña):
+        return {"mensaje":"contraseña incorrecta"}
     
-    if not crypt.verify(password,key):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="contraseña incorrecta")
-    return j_wt
+    key_acces=pass_acces
+
+    return {"password":key_acces,"token_type":"bearer"}
 
 
 
@@ -62,10 +63,12 @@ async def wSocket(ws:WebSocket):
     await m_ws.conectar(ws)
     datos_json:dict=await ws.receive_json()
     
-    if j_wt==datos_json.get("mensaje"):
+    if pass_acces==datos_json.get("constelacion"):
+
 
         await m_ws.escuchador_retransmision(ws)
     else:
         await ws.send_json({"mensaje":"acceso denegado"})
         await ws.close()
-        m_ws.removerClienteDesconectado(ws)
+        await m_ws.removerClienteDesconectado(ws)
+
