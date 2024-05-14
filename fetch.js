@@ -19,10 +19,7 @@ let url2="http://192.168.100.16:3000/enviar"
 let url_ws="ws://192.168.100.16:3000/ws"
 let url_login="http://192.168.100.16:3000/login"
 
-let url_render_login="https://render-fbxh.onrender.com/login"
-let url_render_ws="wss://render-fbxh.onrender.com/ws"
-
-const ws=new WebSocket(url_render_ws)
+const ws=new WebSocket(url_ws)
 let form=new FormData()
 
 const enviar=async (paquete)=>{
@@ -72,7 +69,7 @@ d.addEventListener("click",(e)=>{
 
         //let {url,data,method,mode,headers,msgError}=paquete;
         let paquete={
-            url:url2,
+            url:url1,
             method:"POST",
             mode:"cors",
             data:caballero,
@@ -109,7 +106,7 @@ d.addEventListener("click",(e)=>{
         form.append("password",$text_password.value);
         form.append("username","jesus")
         let paquete={
-            url:url_render_login,
+            url:"http://192.168.100.16:3000/login",
             data:form,
             method:"POST",
             mode:"cors",
