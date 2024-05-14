@@ -49,7 +49,7 @@ async def login(form:OAuth2PasswordRequestForm = Depends()):
 
 @app.get("/")
 async def home():
-    return {"mensaje":"hola les saluda Jesus desde el servidor fastapi"}
+    return {"mensaje":"hola les saluda Jesus desde el servidor fastapi$%&"}
 
 @app.post("/enviar")
 async def enviar(caballero:Caballero_del_zodiaco):
