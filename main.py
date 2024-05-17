@@ -3,7 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status
 from pydantic import BaseModel
 from ManagerWebSocket import *
+from jose import jwt
 from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
+from passlib.context import CryptContext
 
 
 
@@ -18,8 +20,9 @@ app=FastAPI()
 m_ws=ManagerWebSocket()
 
 oauth2=OAuth2PasswordBearer(tokenUrl="/login")
+crypt=CryptContext(schemes=["bcrypt"])
 
-contraseña="yurecuaro"
+contaseña="$2a$12$11nk4jG2pkGMzOqx9EzQdO57CX2623hKZgLemoMOYw7UQ1PCwDyme"
 pass_acces="michoacan"
 
 app.add_middleware(
@@ -35,7 +38,7 @@ app.add_middleware(
 async def login(form:OAuth2PasswordRequestForm = Depends()):
     password=form.password
 
-    if not password==contraseña:
+    if not crypt.verify(password,contaseña):
         return {"mensaje":"contraseña incorrecta"}
     
     key_acces=pass_acces
@@ -46,7 +49,7 @@ async def login(form:OAuth2PasswordRequestForm = Depends()):
 
 @app.get("/")
 async def home():
-    return {"mensaje":"hola les saluda Jesus desde el servidor fastapi$%&"}
+    return {"mensaje":"hola les saluda Jesus desde el servidor fastapi"}
 
 @app.post("/enviar")
 async def enviar(caballero:Caballero_del_zodiaco):
@@ -58,14 +61,6 @@ async def enviar(caballero:Caballero_del_zodiaco):
 @app.websocket("/ws")
 async def wSocket(ws:WebSocket):
     await m_ws.conectar(ws)
-    datos_json:dict=await ws.receive_json()
-    
-    if pass_acces==datos_json.get("constelacion"):
+    await m_ws.escuchador_retransmision(ws)
 
-
-        await m_ws.escuchador_retransmision(ws)
-    else:
-        await ws.send_json({"mensaje":"acceso denegado"})
-        await ws.close()
-        m_ws.removerClienteDesconectado(ws)
 
