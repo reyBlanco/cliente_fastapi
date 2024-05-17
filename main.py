@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status
 from pydantic import BaseModel
 from ManagerWebSocket import *
+import uvicorn
 
 class Caballero_del_zodiaco(BaseModel):
     nombre:Optional[str]
@@ -39,4 +40,5 @@ async def wSocket(ws:WebSocket):
     await m_ws.conectar(ws)
     await m_ws.escuchador_retransmision(ws)
 
-
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
