@@ -61,14 +61,6 @@ async def enviar(caballero:Caballero_del_zodiaco):
 @app.websocket("/ws")
 async def wSocket(ws:WebSocket):
     await m_ws.conectar(ws)
-    datos_json:dict=await ws.receive_json()
-    
-    if pass_acces==datos_json.get("constelacion"):
+    await m_ws.escuchador_retransmision(ws)
 
-
-        await m_ws.escuchador_retransmision(ws)
-    else:
-        await ws.send_json({"mensaje":"acceso denegado"})
-        await ws.close()
-        await m_ws.removerClienteDesconectado(ws)
 
