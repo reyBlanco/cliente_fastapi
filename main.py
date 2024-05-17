@@ -3,10 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status
 from pydantic import BaseModel
 from ManagerWebSocket import *
-from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
-from passlib.context import CryptContext
-
-
 
 class Caballero_del_zodiaco(BaseModel):
     nombre:Optional[str]
@@ -18,12 +14,6 @@ class Caballero_del_zodiaco(BaseModel):
 app=FastAPI()
 m_ws=ManagerWebSocket()
 
-oauth2=OAuth2PasswordBearer(tokenUrl="/login")
-crypt=CryptContext(schemes=["bcrypt"])
-
-contaseña="$2a$12$11nk4jG2pkGMzOqx9EzQdO57CX2623hKZgLemoMOYw7UQ1PCwDyme"
-pass_acces="michoacan"
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -32,19 +22,6 @@ app.add_middleware(
     allow_credentials=True,
 
 )
-
-@app.post("/login")
-async def login(form:OAuth2PasswordRequestForm = Depends()):
-    password=form.password
-
-    if not crypt.verify(password,contaseña):
-        return {"mensaje":"contraseña incorrecta"}
-    
-    key_acces=pass_acces
-
-    return {"password":key_acces,"token_type":"bearer"}
-
-
 
 @app.get("/")
 async def home():
