@@ -20,6 +20,7 @@ let url_ws="ws://192.168.100.16:3000/ws"
 let url_ws_render="wss://render-fbxh.onrender.com/ws"
 let url_login="http://192.168.100.16:3000/login"
 let url_login_render="https://render-fbxh.onrender.com/login"
+let url_glitch_ws="wss://charm-midnight-fedora.glitch.me/ws"
 
 const ws=new WebSocket(url_ws_render)
 let form=new FormData()
